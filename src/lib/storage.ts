@@ -12,7 +12,12 @@ export function getCurriculos(): Curriculo[] {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(curriculosMock));
     return curriculosMock;
   }
-  return JSON.parse(stored) as Curriculo[];
+  try {
+    return JSON.parse(stored) as Curriculo[];
+  } catch {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(curriculosMock));
+    return curriculosMock;
+  }
 }
 
 export function getCurriculoById(id: string): Curriculo | undefined {
