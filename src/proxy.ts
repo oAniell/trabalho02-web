@@ -7,7 +7,7 @@ const redirects: Record<string, string> = {
   "/sistema/paginas/novo": "/curriculos/cadastrar",
 };
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Redireciona rotas legadas
