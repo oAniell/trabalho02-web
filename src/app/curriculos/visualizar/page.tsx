@@ -5,10 +5,29 @@ import Image from "next/image";
 import { getCurriculos } from "@/lib/storage";
 import { Curriculo } from "@/types/curriculo";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FiUser, FiBriefcase, FiFileText, FiPlusCircle, FiSearch } from "react-icons/fi";
+
+const PHOTO_PREVIEWS_KEY = "curriculoFotoPreviews";
+
+function isRenderableImage(src?: string) {
+  return Boolean(src && /^(\/|https?:\/\/|data:image\/|blob:)/.test(src));
+}
+
+function getPhotoPreview(fileName?: string) {
+  if (!fileName || typeof window === "undefined") return undefined;
+
+  const stored = localStorage.getItem(PHOTO_PREVIEWS_KEY);
+  if (!stored) return undefined;
+
+  try {
+    const previews = JSON.parse(stored) as Record<string, string>;
+    return previews[fileName];
+  } catch {
+    return undefined;
+  }
+}
 
 export default function VisualizarPage() {
   const [curriculos, setCurriculos] = useState<Curriculo[]>([]);
@@ -134,56 +153,61 @@ export default function VisualizarPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCurriculos.map((curriculo) => (
-              <button
-                key={curriculo.id}
-                onClick={() => goTo(`/curriculos/visualizar/${curriculo.id}`)}
-                className="text-left group"
-              >
-                <Card className="h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-white border-gray-200 hover:border-indigo-300 hover:bg-gradient-to-br hover:from-indigo-50 hover:to-violet-50">
-                  <CardContent className="p-5">
-                    <div className="flex flex-col items-center text-center gap-3">
-                      <div className="w-20 h-20 relative rounded-full overflow-hidden bg-gradient-to-br from-indigo-100 to-violet-100 ring-4 ring-indigo-100 group-hover:ring-indigo-200 transition-all">
-                        {curriculo.foto ? (
-                          <Image
-                            src={curriculo.foto}
-                            alt={curriculo.nome}
-                            fill
-                            className="object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-500 to-violet-500">
-                            <FiUser className="w-8 h-8 text-white" />
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex-1 w-full">
-                        <h3 className="font-bold text-gray-900 text-lg truncate group-hover:text-indigo-700 transition-colors">{curriculo.nome}</h3>
-                        <div className="flex items-center justify-center gap-1.5 text-indigo-600 text-sm font-medium mt-1">
-                          <FiBriefcase className="w-4 h-4" />
-                          <span className="truncate">{curriculo.cargo}</span>
+            {filteredCurriculos.map((curriculo) => {
+              const photoSrc = isRenderableImage(curriculo.foto) ? curriculo.foto : getPhotoPreview(curriculo.foto);
+
+              return (
+                <button
+                  key={curriculo.id}
+                  onClick={() => goTo(`/curriculos/visualizar/${curriculo.id}`)}
+                  className="text-left group"
+                >
+                  <Card className="h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-white border-gray-200 hover:border-indigo-300 hover:bg-gradient-to-br hover:from-indigo-50 hover:to-violet-50">
+                    <CardContent className="p-5">
+                      <div className="flex flex-col items-center text-center gap-3">
+                        <div className="w-20 h-20 relative rounded-full overflow-hidden bg-gradient-to-br from-indigo-100 to-violet-100 ring-4 ring-indigo-100 group-hover:ring-indigo-200 transition-all">
+                          {photoSrc ? (
+                            <Image
+                              src={photoSrc}
+                              alt={curriculo.nome}
+                              fill
+                              className="object-cover"
+                              unoptimized
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-500 to-violet-500">
+                              <FiUser className="w-8 h-8 text-white" />
+                            </div>
+                          )}
                         </div>
-                        <p className="text-gray-500 text-sm mt-3 line-clamp-3 leading-relaxed">{curriculo.resumoProfissional}</p>
-                        {curriculo.habilidades && curriculo.habilidades.length > 0 && (
-                          <div className="flex flex-wrap justify-center gap-1.5 mt-3">
-                            {curriculo.habilidades.slice(0, 3).map((hab, idx) => (
-                              <span key={idx} className="px-2 py-0.5 text-xs font-medium bg-indigo-100 text-indigo-700 rounded-full">
-                                {hab}
-                              </span>
-                            ))}
-                            {curriculo.habilidades.length > 3 && (
-                              <span className="px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">
-                                +{curriculo.habilidades.length - 3}
-                              </span>
-                            )}
+                        <div className="flex-1 w-full">
+                          <h3 className="font-bold text-gray-900 text-lg truncate group-hover:text-indigo-700 transition-colors">{curriculo.nome}</h3>
+                          <div className="flex items-center justify-center gap-1.5 text-indigo-600 text-sm font-medium mt-1">
+                            <FiBriefcase className="w-4 h-4" />
+                            <span className="truncate">{curriculo.cargo}</span>
                           </div>
-                        )}
+                          <p className="text-gray-500 text-sm mt-3 line-clamp-3 leading-relaxed">{curriculo.resumoProfissional}</p>
+                          {curriculo.habilidades && curriculo.habilidades.length > 0 && (
+                            <div className="flex flex-wrap justify-center gap-1.5 mt-3">
+                              {curriculo.habilidades.slice(0, 3).map((hab, idx) => (
+                                <span key={idx} className="px-2 py-0.5 text-xs font-medium bg-indigo-100 text-indigo-700 rounded-full">
+                                  {hab}
+                                </span>
+                              ))}
+                              {curriculo.habilidades.length > 3 && (
+                                <span className="px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">
+                                  +{curriculo.habilidades.length - 3}
+                                </span>
+                              )}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </button>
-            ))}
+                    </CardContent>
+                  </Card>
+                </button>
+              );
+            })}
           </div>
         )}
       </div>
