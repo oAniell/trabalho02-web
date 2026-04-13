@@ -71,16 +71,16 @@ export default function DetalhesPage() {
 
   if (!curriculo) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-violet-50 py-8">
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-5 px-4 text-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-lg bg-indigo-100 text-indigo-600">
+          <div className="flex h-20 w-20 items-center justify-center rounded-lg bg-violet-100 text-violet-600">
             <FiUser className="h-9 w-9" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-950">Currículo não encontrado</h1>
-            <p className="mt-2 text-sm text-gray-600">O registro solicitado não está disponível.</p>
+            <h1 className="text-2xl font-bold text-violet-950">Currículo não encontrado</h1>
+            <p className="mt-2 text-sm text-violet-600">O registro solicitado não está disponível.</p>
           </div>
-          <Button onClick={voltar} className="bg-indigo-600 text-white hover:bg-indigo-700">
+          <Button onClick={voltar} className="bg-violet-600 text-white hover:bg-violet-700">
             <FiArrowLeft />
             Voltar
           </Button>
@@ -95,10 +95,10 @@ export default function DetalhesPage() {
       : getPhotoPreview(curriculo.foto);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-violet-50 py-8">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <Button variant="outline" onClick={voltar} className="w-fit border-gray-300 bg-white">
+          <Button variant="outline" onClick={voltar} className="w-fit border-violet-200 bg-white">
             <FiArrowLeft />
             Voltar
           </Button>
@@ -108,10 +108,10 @@ export default function DetalhesPage() {
           </Button>
         </div>
 
-        <Card className="rounded-lg border-gray-200 bg-white shadow-sm">
+        <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardContent className="grid gap-6 p-6 md:grid-cols-[180px_1fr]">
             <div className="flex flex-col items-center gap-3 text-center">
-              <div className="flex h-40 w-40 items-center justify-center overflow-hidden rounded-lg bg-indigo-100 text-indigo-600">
+              <div className="flex h-40 w-40 items-center justify-center overflow-hidden rounded-lg bg-violet-100 text-violet-600">
                 {photoSrc ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={photoSrc} alt={curriculo.nome} className="h-full w-full object-cover" />
@@ -119,20 +119,20 @@ export default function DetalhesPage() {
                   <FiUser className="h-16 w-16" />
                 )}
               </div>
-              {curriculo.foto && <span className="break-all text-xs text-gray-500">{curriculo.foto}</span>}
+              {curriculo.foto && <span className="break-all text-xs text-violet-500">{curriculo.foto}</span>}
             </div>
 
             <div className="flex flex-col gap-5">
               <div>
-                <p className="text-sm font-medium text-indigo-600">Detalhes do curriculo</p>
-                <h1 className="mt-1 text-3xl font-bold text-gray-950">{curriculo.nome}</h1>
-                <p className="mt-2 flex items-center gap-2 text-lg font-medium text-indigo-700">
+                <p className="text-sm font-medium text-violet-600">Detalhes do curriculo</p>
+                <h1 className="mt-1 text-3xl font-bold text-violet-950">{curriculo.nome}</h1>
+                <p className="mt-2 flex items-center gap-2 text-lg font-medium text-violet-700">
                   <FiBriefcase />
                   {curriculo.cargo}
                 </p>
               </div>
 
-              <div className="grid gap-3 text-sm text-gray-700 md:grid-cols-2">
+              <div className="grid gap-3 text-sm text-violet-700 md:grid-cols-2">
                 <Info icon={<FiMail />} label="E-mail" value={curriculo.email} />
                 <Info icon={<FiPhone />} label="Telefone" value={curriculo.telefone} />
                 <Info icon={<FiUser />} label="CPF" value={curriculo.cpf} />
@@ -144,52 +144,52 @@ export default function DetalhesPage() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-lg border-gray-200 bg-white shadow-sm">
+        <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardHeader>
-            <CardTitle className="text-gray-950">Resumo profissional</CardTitle>
+            <CardTitle className="text-violet-950">Resumo profissional</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="leading-relaxed text-gray-700">{curriculo.resumoProfissional}</p>
+            <p className="leading-relaxed text-violet-700">{curriculo.resumoProfissional}</p>
           </CardContent>
         </Card>
 
-        <Card className="rounded-lg border-gray-200 bg-white shadow-sm">
+        <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardHeader>
-            <CardTitle className="text-gray-950">Experiencias profissionais</CardTitle>
+            <CardTitle className="text-violet-950">Experiencias profissionais</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             {curriculo.experiencias.map((experiencia, index) => (
-              <div key={`${experiencia.empresa}-${index}`} className="rounded-lg border border-gray-200 p-4">
+              <div key={`${experiencia.empresa}-${index}`} className="rounded-lg border border-violet-100 p-4">
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <h2 className="font-semibold text-gray-950">{experiencia.cargo}</h2>
-                    <p className="text-sm font-medium text-indigo-700">{experiencia.empresa}</p>
+                    <h2 className="font-semibold text-violet-950">{experiencia.cargo}</h2>
+                    <p className="text-sm font-medium text-violet-700">{experiencia.empresa}</p>
                   </div>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-violet-500">
                     {experiencia.dataInicio} - {experiencia.dataFim}
                   </span>
                 </div>
                 <Separator className="my-3" />
-                <p className="text-sm leading-relaxed text-gray-700">{experiencia.descricao}</p>
+                <p className="text-sm leading-relaxed text-violet-700">{experiencia.descricao}</p>
               </div>
             ))}
           </CardContent>
         </Card>
 
-        <Card className="rounded-lg border-gray-200 bg-white shadow-sm">
+        <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardHeader>
-            <CardTitle className="text-gray-950">Formacao academica</CardTitle>
+            <CardTitle className="text-violet-950">Formacao academica</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             {curriculo.formacoes.map((formacao, index) => (
-              <div key={`${formacao.instituicao}-${index}`} className="rounded-lg border border-gray-200 p-4">
+              <div key={`${formacao.instituicao}-${index}`} className="rounded-lg border border-violet-100 p-4">
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <h2 className="font-semibold text-gray-950">{formacao.curso}</h2>
-                    <p className="text-sm font-medium text-indigo-700">{formacao.instituicao}</p>
-                    <p className="text-sm text-gray-600">{formacao.grau}</p>
+                    <h2 className="font-semibold text-violet-950">{formacao.curso}</h2>
+                    <p className="text-sm font-medium text-violet-700">{formacao.instituicao}</p>
+                    <p className="text-sm text-violet-600">{formacao.grau}</p>
                   </div>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-violet-500">
                     {formacao.dataInicio} - {formacao.dataFim}
                   </span>
                 </div>
@@ -198,20 +198,20 @@ export default function DetalhesPage() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-lg border-gray-200 bg-white shadow-sm">
+        <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardHeader>
-            <CardTitle className="text-gray-950">Habilidades</CardTitle>
+            <CardTitle className="text-violet-950">Habilidades</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
               {curriculo.habilidades.length > 0 ? (
                 curriculo.habilidades.map((habilidade) => (
-                  <Badge key={habilidade} className="bg-indigo-100 text-indigo-700">
+                  <Badge key={habilidade} className="bg-violet-100 text-violet-700">
                     {habilidade}
                   </Badge>
                 ))
               ) : (
-                <p className="text-sm text-gray-500">Nenhuma habilidade cadastrada.</p>
+                <p className="text-sm text-violet-500">Nenhuma habilidade cadastrada.</p>
               )}
             </div>
           </CardContent>
@@ -223,13 +223,13 @@ export default function DetalhesPage() {
 
 function DetalhesSkeleton() {
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-violet-50 py-8">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4">
         <div className="flex justify-between">
           <Skeleton className="h-9 w-24" />
           <Skeleton className="h-9 w-24" />
         </div>
-        <Card className="rounded-lg border-gray-200 bg-white shadow-sm">
+        <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardContent className="grid gap-6 p-6 md:grid-cols-[180px_1fr]">
             <Skeleton className="h-40 w-40 rounded-lg" />
             <div className="flex flex-col gap-4">
@@ -245,7 +245,7 @@ function DetalhesSkeleton() {
           </CardContent>
         </Card>
         {Array.from({ length: 4 }).map((_, index) => (
-          <Card key={index} className="rounded-lg border-gray-200 bg-white shadow-sm">
+          <Card key={index} className="rounded-lg border-violet-100 bg-white shadow-sm">
             <CardHeader>
               <Skeleton className="h-6 w-52" />
             </CardHeader>
@@ -263,11 +263,11 @@ function DetalhesSkeleton() {
 
 function Info({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="flex items-start gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3">
-      <span className="mt-0.5 text-indigo-600">{icon}</span>
+    <div className="flex items-start gap-3 rounded-lg border border-violet-100 bg-violet-50 p-3">
+      <span className="mt-0.5 text-violet-600">{icon}</span>
       <div>
-        <p className="text-xs font-medium uppercase text-gray-500">{label}</p>
-        <p className="break-words font-medium text-gray-900">{value}</p>
+        <p className="text-xs font-medium uppercase text-violet-500">{label}</p>
+        <p className="break-words font-medium text-violet-900">{value}</p>
       </div>
     </div>
   );

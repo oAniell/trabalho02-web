@@ -31,7 +31,7 @@ export function Nav() {
                   ? "bg-white/20 text-white"
                   : "text-white/70 hover:text-white hover:bg-white/10"
               }
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white`}
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300`}
           >
             <Icon size={15} />
             {label}
