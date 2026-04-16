@@ -4,8 +4,9 @@ import { Nav } from "./Nav";
 
 export function Header() {
   return (
-    //aaaa
-    <header className="sticky top-0 z-50 w-full bg-indigo-700 shadow-md">
+
+    <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 shadow-md">
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-14 items-center justify-between">
           <Link

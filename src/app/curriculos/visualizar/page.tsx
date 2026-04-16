@@ -62,15 +62,15 @@ export default function VisualizarPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50/30 py-8">
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 to-purple-50/30 py-8">
         <div className="container mx-auto px-4 max-w-6xl">
-          <h1 className="text-2xl font-bold text-gray-900 mb-8">Meus Currículos</h1>
+          <h1 className="text-2xl font-bold text-violet-900 mb-8">Meus Currículos</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
-              <Card key={i} className="bg-white border-gray-200 shadow-sm">
+              <Card key={i} className="bg-white border-violet-100 shadow-sm">
                 <CardContent className="p-5">
                   <div className="flex flex-col items-center text-center gap-3">
-                    <Skeleton className="w-20 h-20 rounded-full ring-4 ring-indigo-100" />
+                    <Skeleton className="w-20 h-20 rounded-full ring-4 ring-violet-100" />
                     <div className="flex-1 w-full space-y-2">
                       <Skeleton className="h-6 w-3/4 mx-auto" />
                       <Skeleton className="h-4 w-1/2 mx-auto" />
@@ -90,20 +90,20 @@ export default function VisualizarPage() {
 
   if (curriculos.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50/30 py-8">
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 to-purple-50/30 py-8">
         <div className="container mx-auto px-4 max-w-6xl">
-          <h1 className="text-2xl font-bold text-gray-900 mb-8">Meus Currículos</h1>
+          <h1 className="text-2xl font-bold text-violet-900 mb-8">Meus Currículos</h1>
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="w-24 h-24 bg-gradient-to-br from-indigo-100 to-violet-100 rounded-full flex items-center justify-center mb-6 ring-4 ring-indigo-100">
-              <FiFileText className="w-10 h-10 text-indigo-600" />
+            <div className="w-24 h-24 bg-gradient-to-br from-violet-100 to-fuchsia-100 rounded-full flex items-center justify-center mb-6 ring-4 ring-violet-100">
+              <FiFileText className="w-10 h-10 text-violet-600" />
             </div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Nenhum currículo encontrado</h2>
-            <p className="text-gray-500 mb-6 max-w-md">
+            <h2 className="text-xl font-semibold text-violet-900 mb-2">Nenhum currículo encontrado</h2>
+            <p className="text-violet-600 mb-6 max-w-md">
               Você ainda não criou nenhum currículo. Comece agora e conquiste seu próximo emprego!
             </p>
             <button
               onClick={() => goTo("/curriculos/cadastrar")}
-              className="inline-flex items-center justify-center gap-2 h-10 px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-all hover:shadow-lg hover:shadow-indigo-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+              className="inline-flex items-center justify-center gap-2 h-10 px-6 py-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium rounded-lg transition-all hover:shadow-lg hover:shadow-violet-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-600 focus-visible:ring-offset-2"
             >
               <FiPlusCircle className="w-4 h-4" />
               Criar meu primeiro currículo
@@ -115,16 +115,16 @@ export default function VisualizarPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50/30 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 to-purple-50/30 py-8">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Meus Currículos</h1>
-            <p className="text-gray-500 text-sm mt-1">{curriculos.length} currículo{curriculos.length !== 1 ? 's' : ''} encontrado{curriculos.length !== 1 ? 's' : ''}</p>
+            <h1 className="text-2xl font-bold text-violet-900">Meus Currículos</h1>
+            <p className="text-violet-600 text-sm mt-1">{curriculos.length} currículo{curriculos.length !== 1 ? 's' : ''} encontrado{curriculos.length !== 1 ? 's' : ''}</p>
           </div>
           <div className="flex gap-3">
             <div className="relative">
-              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-violet-400" />
               <Input
                 type="text"
                 placeholder="Buscar por nome ou cargo..."
@@ -135,7 +135,7 @@ export default function VisualizarPage() {
             </div>
             <button
               onClick={() => goTo("/curriculos/cadastrar")}
-              className="inline-flex items-center justify-center gap-2 h-9 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-all hover:shadow-lg hover:shadow-indigo-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+              className="inline-flex items-center justify-center gap-2 h-9 px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium rounded-lg transition-all hover:shadow-lg hover:shadow-violet-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-600 focus-visible:ring-offset-2"
             >
               <FiPlusCircle className="w-4 h-4" />
               Novo Currículo
@@ -145,11 +145,11 @@ export default function VisualizarPage() {
 
         {filteredCurriculos.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-              <FiSearch className="w-8 h-8 text-gray-400" />
+            <div className="w-20 h-20 bg-violet-100 rounded-full flex items-center justify-center mb-4">
+              <FiSearch className="w-8 h-8 text-violet-400" />
             </div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Nenhum resultado encontrado</h2>
-            <p className="text-gray-500">Tente buscar com outros termos ou crie um novo currículo.</p>
+            <h2 className="text-xl font-semibold text-violet-900 mb-2">Nenhum resultado encontrado</h2>
+            <p className="text-violet-600">Tente buscar com outros termos ou crie um novo currículo.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -162,10 +162,10 @@ export default function VisualizarPage() {
                   onClick={() => goTo(`/curriculos/visualizar/${curriculo.id}`)}
                   className="text-left group"
                 >
-                  <Card className="h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-white border-gray-200 hover:border-indigo-300 hover:bg-gradient-to-br hover:from-indigo-50 hover:to-violet-50">
+                  <Card className="h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-white border-violet-100 hover:border-violet-300 hover:bg-gradient-to-br hover:from-violet-50 hover:to-fuchsia-50">
                     <CardContent className="p-5">
                       <div className="flex flex-col items-center text-center gap-3">
-                        <div className="w-20 h-20 relative rounded-full overflow-hidden bg-gradient-to-br from-indigo-100 to-violet-100 ring-4 ring-indigo-100 group-hover:ring-indigo-200 transition-all">
+                        <div className="w-20 h-20 relative rounded-full overflow-hidden bg-gradient-to-br from-violet-100 to-fuchsia-100 ring-4 ring-violet-100 group-hover:ring-violet-200 transition-all">
                           {photoSrc ? (
                             <Image
                               src={photoSrc}
@@ -175,27 +175,27 @@ export default function VisualizarPage() {
                               unoptimized
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-500 to-violet-500">
+                            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-violet-500 to-fuchsia-500">
                               <FiUser className="w-8 h-8 text-white" />
                             </div>
                           )}
                         </div>
                         <div className="flex-1 w-full">
-                          <h3 className="font-bold text-gray-900 text-lg truncate group-hover:text-indigo-700 transition-colors">{curriculo.nome}</h3>
-                          <div className="flex items-center justify-center gap-1.5 text-indigo-600 text-sm font-medium mt-1">
+                          <h3 className="font-bold text-violet-900 text-lg truncate group-hover:text-violet-700 transition-colors">{curriculo.nome}</h3>
+                          <div className="flex items-center justify-center gap-1.5 text-violet-600 text-sm font-medium mt-1">
                             <FiBriefcase className="w-4 h-4" />
                             <span className="truncate">{curriculo.cargo}</span>
                           </div>
-                          <p className="text-gray-500 text-sm mt-3 line-clamp-3 leading-relaxed">{curriculo.resumoProfissional}</p>
+                          <p className="text-violet-600 text-sm mt-3 line-clamp-3 leading-relaxed">{curriculo.resumoProfissional}</p>
                           {curriculo.habilidades && curriculo.habilidades.length > 0 && (
                             <div className="flex flex-wrap justify-center gap-1.5 mt-3">
                               {curriculo.habilidades.slice(0, 3).map((hab, idx) => (
-                                <span key={idx} className="px-2 py-0.5 text-xs font-medium bg-indigo-100 text-indigo-700 rounded-full">
+                                <span key={idx} className="px-2 py-0.5 text-xs font-medium bg-violet-100 text-violet-700 rounded-full">
                                   {hab}
                                 </span>
                               ))}
                               {curriculo.habilidades.length > 3 && (
-                                <span className="px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">
+                                <span className="px-2 py-0.5 text-xs font-medium bg-violet-100 text-violet-600 rounded-full">
                                   +{curriculo.habilidades.length - 3}
                                 </span>
                               )}

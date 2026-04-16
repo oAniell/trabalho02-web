@@ -258,20 +258,20 @@ export default function CadastrarPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-violet-50 py-8">
       <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4">
         <div className="flex flex-col gap-2">
-          <p className="text-sm font-medium text-indigo-600">Cadastro de curriculo</p>
-          <h1 className="text-3xl font-bold text-gray-950">Novo curriculo</h1>
-          <p className="max-w-2xl text-sm text-gray-600">
+          <p className="text-sm font-medium text-violet-600">Cadastro de curriculo</p>
+          <h1 className="text-3xl font-bold text-violet-950">Novo curriculo</h1>
+          <p className="max-w-2xl text-sm text-violet-700">
             Preencha seus dados profissionais para criar um curriculo completo.
           </p>
         </div>
 
-        <Card className="rounded-lg border-gray-200 bg-white shadow-sm">
+        <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-gray-950">
-              <FiUser className="text-indigo-600" />
+            <CardTitle className="flex items-center gap-2 text-violet-950">
+              <FiUser className="text-violet-600" />
               Dados pessoais
             </CardTitle>
           </CardHeader>
@@ -317,14 +317,14 @@ export default function CadastrarPage() {
 
             <Field label="LinkedIn" error={errors.linkedin?.message}>
               <div className="relative">
-                <FiLinkedin className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <FiLinkedin className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-violet-400" />
                 <Input {...register("linkedin")} className="pl-9" placeholder="linkedin.com/in/seu-perfil" />
               </div>
             </Field>
 
             <Field label="GitHub" error={errors.github?.message}>
               <div className="relative">
-                <FiGithub className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <FiGithub className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-violet-400" />
                 <Input {...register("github")} className="pl-9" placeholder="github.com/seu-usuario" />
               </div>
             </Field>
@@ -339,12 +339,12 @@ export default function CadastrarPage() {
             </Field>
 
             <div className="grid gap-3 md:col-span-2 md:grid-cols-[220px_1fr] md:items-center">
-              <div className="flex h-40 items-center justify-center overflow-hidden rounded-lg border border-dashed border-indigo-200 bg-indigo-50">
+              <div className="flex h-40 items-center justify-center overflow-hidden rounded-lg border border-dashed border-violet-200 bg-violet-50">
                 {previewUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={previewUrl} alt="Preview da foto" className="h-full w-full object-cover" />
                 ) : (
-                  <div className="flex flex-col items-center gap-2 text-indigo-600">
+                  <div className="flex flex-col items-center gap-2 text-violet-600">
                     <FiImage className="h-8 w-8" />
                     <span className="text-sm font-medium">Preview da foto</span>
                   </div>
@@ -352,22 +352,22 @@ export default function CadastrarPage() {
               </div>
               <Field label="Foto" error={errors.foto?.message}>
                 <Input type="file" accept="image/*" onChange={handlePhotoChange} className="bg-white" />
-                <p className="text-xs text-gray-500">O arquivo nao sera enviado; apenas o nome sera salvo.</p>
+                <p className="text-xs text-violet-500">O arquivo nao sera enviado; apenas o nome sera salvo.</p>
               </Field>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="rounded-lg border-gray-200 bg-white shadow-sm">
+        <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="flex items-center gap-2 text-gray-950">
-              <FiBriefcase className="text-indigo-600" />
+            <CardTitle className="flex items-center gap-2 text-violet-950">
+              <FiBriefcase className="text-violet-600" />
               Experiencias profissionais
             </CardTitle>
             <Button
               type="button"
               onClick={() => experiencias.append(emptyExperience)}
-              className="bg-indigo-600 text-white hover:bg-indigo-700"
+              className="bg-violet-600 text-white hover:bg-violet-700"
             >
               <FiPlus />
               Adicionar Experiencia
@@ -375,7 +375,7 @@ export default function CadastrarPage() {
           </CardHeader>
           <CardContent className="flex flex-col gap-5">
             {experiencias.fields.map((field, index) => (
-              <div key={field.id} className="grid gap-4 rounded-lg border border-gray-200 p-4 md:grid-cols-2">
+              <div key={field.id} className="grid gap-4 rounded-lg border border-violet-100 p-4 md:grid-cols-2">
                 <Field label="Empresa" error={errors.experiencias?.[index]?.empresa?.message}>
                   <Input {...register(`experiencias.${index}.empresa`)} aria-invalid={!!errors.experiencias?.[index]?.empresa} />
                 </Field>
@@ -407,7 +407,7 @@ export default function CadastrarPage() {
                     variant="outline"
                     onClick={() => experiencias.remove(index)}
                     disabled={experiencias.fields.length === 1}
-                    className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                    className="border-violet-200 text-violet-600 hover:bg-violet-50 hover:text-violet-700"
                   >
                     <FiTrash2 />
                     Remover
@@ -418,16 +418,16 @@ export default function CadastrarPage() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-lg border-gray-200 bg-white shadow-sm">
+        <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="flex items-center gap-2 text-gray-950">
-              <FiCalendar className="text-indigo-600" />
+            <CardTitle className="flex items-center gap-2 text-violet-950">
+              <FiCalendar className="text-violet-600" />
               Formacao academica
             </CardTitle>
             <Button
               type="button"
               onClick={() => formacoes.append(emptyEducation)}
-              className="bg-indigo-600 text-white hover:bg-indigo-700"
+              className="bg-violet-600 text-white hover:bg-violet-700"
             >
               <FiPlus />
               Adicionar Formacao
@@ -435,7 +435,7 @@ export default function CadastrarPage() {
           </CardHeader>
           <CardContent className="flex flex-col gap-5">
             {formacoes.fields.map((field, index) => (
-              <div key={field.id} className="grid gap-4 rounded-lg border border-gray-200 p-4 md:grid-cols-2">
+              <div key={field.id} className="grid gap-4 rounded-lg border border-violet-100 p-4 md:grid-cols-2">
                 <Field label="Instituicao" error={errors.formacoes?.[index]?.instituicao?.message}>
                   <Input {...register(`formacoes.${index}.instituicao`)} aria-invalid={!!errors.formacoes?.[index]?.instituicao} />
                 </Field>
@@ -467,7 +467,7 @@ export default function CadastrarPage() {
                     variant="outline"
                     onClick={() => formacoes.remove(index)}
                     disabled={formacoes.fields.length === 1}
-                    className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                    className="border-violet-200 text-violet-600 hover:bg-violet-50 hover:text-violet-700"
                   >
                     <FiTrash2 />
                     Remover
@@ -478,9 +478,9 @@ export default function CadastrarPage() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-lg border-gray-200 bg-white shadow-sm">
+        <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardHeader>
-            <CardTitle className="text-gray-950">Habilidades</CardTitle>
+            <CardTitle className="text-violet-950">Habilidades</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -495,21 +495,21 @@ export default function CadastrarPage() {
                 }}
                 placeholder="Ex: React"
               />
-              <Button type="button" onClick={addSkill} className="bg-indigo-600 text-white hover:bg-indigo-700">
+              <Button type="button" onClick={addSkill} className="bg-violet-600 text-white hover:bg-violet-700">
                 <FiPlus />
                 Adicionar
               </Button>
             </div>
             <div className="flex min-h-8 flex-wrap gap-2">
               {habilidades.map((skill) => (
-                <Badge key={skill} className="bg-indigo-100 text-indigo-700">
+                <Badge key={skill} className="bg-violet-100 text-violet-700">
                   {skill}
                   <button type="button" onClick={() => removeSkill(skill)} aria-label={`Remover ${skill}`}>
                     <FiX />
                   </button>
                 </Badge>
               ))}
-              {habilidades.length === 0 && <p className="text-sm text-gray-500">Nenhuma habilidade adicionada.</p>}
+              {habilidades.length === 0 && <p className="text-sm text-violet-500">Nenhuma habilidade adicionada.</p>}
             </div>
           </CardContent>
         </Card>
@@ -518,7 +518,7 @@ export default function CadastrarPage() {
           <Button
             type="submit"
             disabled={!isValid || isSubmitting}
-            className="h-10 bg-indigo-600 px-6 text-white hover:bg-indigo-700"
+            className="h-10 bg-violet-600 px-6 text-white hover:bg-violet-700"
           >
             <FiSave />
             {isSubmitting ? "Salvando..." : "Salvar curriculo"}
