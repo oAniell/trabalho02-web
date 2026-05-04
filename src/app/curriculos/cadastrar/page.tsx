@@ -25,7 +25,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { saveCurriculo } from "@/lib/storage";
+import { saveCurriculo } from "@/lib/curriculoService";
 import { Curriculo } from "@/types/curriculo";
 
 type CurriculoFormData = Omit<Curriculo, "id">;
@@ -247,10 +247,15 @@ export default function CadastrarPage() {
     );
   };
 
-  const onSubmit = (data: CurriculoFormData) => {
-    saveCurriculo(data);
-    toast.success("Currículo cadastrado com sucesso!");
-    router.push("/curriculos/visualizar");
+  const onSubmit = async (data: CurriculoFormData) => {
+    try {
+      await saveCurriculo(data);
+      toast.success("Currículo cadastrado com sucesso!");
+      router.push("/curriculos/visualizar");
+    } catch (err) {
+      console.error("Erro ao cadastrar currículo:", err);
+      toast.error("Erro ao cadastrar currículo. Tente novamente.");
+    }
   };
 
   const onInvalid = (formErrors: FieldErrors<CurriculoFormData>) => {

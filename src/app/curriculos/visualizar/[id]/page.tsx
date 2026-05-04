@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { deleteCurriculo, getCurriculoById } from "@/lib/storage";
+import { deleteCurriculo, getCurriculoById } from "@/lib/curriculoService";
 import { Curriculo } from "@/types/curriculo";
 
 const PHOTO_PREVIEWS_KEY = "curriculoFotoPreviews";
@@ -47,22 +47,36 @@ export default function DetalhesPage() {
   const [curriculo, setCurriculo] = useState<Curriculo | null>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setCurriculo(getCurriculoById(id) ?? null);
-      setLoading(false);
-    }, 800);
-
-    return () => clearTimeout(timer);
+    let cancelled = false;
+    async function load() {
+      try {
+        const data = await getCurriculoById(id);
+        if (!cancelled) {
+          setCurriculo(data ?? null);
+        }
+      } catch (err) {
+        console.error("Erro ao carregar currículo:", err);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    load();
+    return () => { cancelled = true; };
   }, [id]);
 
   const voltar = () => {
     router.push("/curriculos/visualizar");
   };
 
-  const excluir = () => {
-    deleteCurriculo(id);
-    toast.success("Currículo excluído com sucesso!");
-    router.push("/curriculos/visualizar");
+  const excluir = async () => {
+    try {
+      await deleteCurriculo(id);
+      toast.success("Currículo excluído com sucesso!");
+      router.push("/curriculos/visualizar");
+    } catch (err) {
+      console.error("Erro ao excluir currículo:", err);
+      toast.error("Erro ao excluir currículo.");
+    }
   };
 
   if (loading) {

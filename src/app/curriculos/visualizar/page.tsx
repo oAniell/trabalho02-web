@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { getCurriculos } from "@/lib/storage";
+import { getCurriculos } from "@/lib/curriculoService";
 import { Curriculo } from "@/types/curriculo";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -36,12 +36,21 @@ export default function VisualizarPage() {
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const data = getCurriculos();
-      setCurriculos(data);
-      setLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
+    let cancelled = false;
+    async function load() {
+      try {
+        const data = await getCurriculos();
+        if (!cancelled) {
+          setCurriculos(data);
+        }
+      } catch (err) {
+        console.error("Erro ao carregar currículos:", err);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    load();
+    return () => { cancelled = true; };
   }, []);
 
   useEffect(() => {
