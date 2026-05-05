@@ -69,15 +69,15 @@ const schema: yup.ObjectSchema<CurriculoFormData> = yup.object({
   telefone: yup
     .string()
     .required("Informe o telefone.")
-    .matches(/^\(\d{2}\) \d{5}-\d{4}$/, "Use o formato (99) 99999-9999 no telefone."),
+    .matches(/^\(\d{2}\) \d{5}-\d{4}$/, "Use o formato (11) 98765-4321 no telefone."),
   cpf: yup
     .string()
     .required("Informe o CPF.")
-    .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "Use o formato 999.999.999-99 no CPF."),
+    .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "Use o formato 123.456.789-00 no CPF."),
   dataNascimento: yup
     .string()
     .required("Informe a data de nascimento.")
-    .matches(/^\d{2}\/\d{2}\/\d{4}$/, "Use o formato 99/99/9999 na data de nascimento."),
+    .matches(/^\d{2}\/\d{2}\/\d{4}$/, "Use o formato DD/MM/AAAA na data de nascimento."),
   resumoProfissional: yup
     .string()
     .trim()
@@ -293,7 +293,7 @@ export default function CadastrarPage() {
               name="telefone"
               label="Telefone"
               mask="(99) 99999-9999"
-              placeholder="(99) 99999-9999"
+              placeholder="(11) 98765-4321"
               error={errors.telefone?.message}
             />
 
@@ -302,7 +302,7 @@ export default function CadastrarPage() {
               name="cpf"
               label="CPF"
               mask="999.999.999-99"
-              placeholder="999.999.999-99"
+              placeholder="123.456.789-00"
               error={errors.cpf?.message}
             />
 
@@ -311,7 +311,7 @@ export default function CadastrarPage() {
               name="dataNascimento"
               label="Data de nascimento"
               mask="99/99/9999"
-              placeholder="99/99/9999"
+              placeholder="15/03/1990"
               error={errors.dataNascimento?.message}
             />
 
@@ -387,7 +387,7 @@ export default function CadastrarPage() {
                   name={`experiencias.${index}.dataInicio`}
                   label="Data de inicio"
                   mask="99/9999"
-                  placeholder="99/9999"
+                  placeholder="01/2022"
                   error={errors.experiencias?.[index]?.dataInicio?.message}
                 />
                 <MaskedField
@@ -395,7 +395,7 @@ export default function CadastrarPage() {
                   name={`experiencias.${index}.dataFim`}
                   label="Data de fim"
                   mask="99/9999"
-                  placeholder="99/9999"
+                  placeholder="12/2024"
                   error={errors.experiencias?.[index]?.dataFim?.message}
                 />
                 <Field label="Descricao" error={errors.experiencias?.[index]?.descricao?.message} className="md:col-span-2">
@@ -450,7 +450,7 @@ export default function CadastrarPage() {
                   name={`formacoes.${index}.dataInicio`}
                   label="Data de inicio"
                   mask="99/9999"
-                  placeholder="99/9999"
+                  placeholder="02/2018"
                   error={errors.formacoes?.[index]?.dataInicio?.message}
                 />
                 <MaskedField
@@ -458,7 +458,7 @@ export default function CadastrarPage() {
                   name={`formacoes.${index}.dataFim`}
                   label="Data de fim"
                   mask="99/9999"
-                  placeholder="99/9999"
+                  placeholder="12/2022"
                   error={errors.formacoes?.[index]?.dataFim?.message}
                 />
                 <div className="flex items-end">
