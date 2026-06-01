@@ -7,6 +7,8 @@ import {
   FiArrowLeft,
   FiBriefcase,
   FiCalendar,
+  FiClock,
+  FiEdit2,
   FiGithub,
   FiLinkedin,
   FiMail,
@@ -20,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SugestoesCurriculo } from "@/components/SugestoesCurriculo";
 import { deleteCurriculo, getCurriculoById } from "@/lib/curriculoService";
 import { Curriculo } from "@/types/curriculo";
 
@@ -27,15 +30,22 @@ const PHOTO_PREVIEWS_KEY = "curriculoFotoPreviews";
 
 function getPhotoPreview(fileName?: string) {
   if (!fileName || typeof window === "undefined") return undefined;
-
   const stored = localStorage.getItem(PHOTO_PREVIEWS_KEY);
   if (!stored) return undefined;
-
   try {
-    const previews = JSON.parse(stored) as Record<string, string>;
-    return previews[fileName];
+    return (JSON.parse(stored) as Record<string, string>)[fileName];
   } catch {
     return undefined;
+  }
+}
+
+function formatCreatedAt(createdAt?: Curriculo["createdAt"]): string | null {
+  if (!createdAt) return null;
+  try {
+    const date = new Date(createdAt.seconds * 1000);
+    return date.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" });
+  } catch {
+    return null;
   }
 }
 
@@ -43,19 +53,20 @@ export default function DetalhesPage() {
   const router = useRouter();
   const params = useParams<{ id: string }>();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
+
   const [loading, setLoading] = useState(true);
   const [curriculo, setCurriculo] = useState<Curriculo | null>(null);
+  const [confirmarExclusao, setConfirmarExclusao] = useState(false);
+  const [excluindo, setExcluindo] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     async function load() {
       try {
         const data = await getCurriculoById(id);
-        if (!cancelled) {
-          setCurriculo(data ?? null);
-        }
+        if (!cancelled) setCurriculo(data ?? null);
       } catch (err) {
-        console.error("Erro ao carregar currículo:", err);
+        console.error("Erro ao carregar curriculo:", err);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -64,24 +75,21 @@ export default function DetalhesPage() {
     return () => { cancelled = true; };
   }, [id]);
 
-  const voltar = () => {
-    router.push("/curriculos/visualizar");
-  };
-
   const excluir = async () => {
+    setExcluindo(true);
     try {
       await deleteCurriculo(id);
-      toast.success("Currículo excluído com sucesso!");
+      toast.success("Curriculo excluido com sucesso!");
       router.push("/curriculos/visualizar");
     } catch (err) {
-      console.error("Erro ao excluir currículo:", err);
-      toast.error("Erro ao excluir currículo.");
+      console.error("Erro ao excluir curriculo:", err);
+      toast.error("Erro ao excluir curriculo.");
+      setExcluindo(false);
+      setConfirmarExclusao(false);
     }
   };
 
-  if (loading) {
-    return <DetalhesSkeleton />;
-  }
+  if (loading) return <DetalhesSkeleton />;
 
   if (!curriculo) {
     return (
@@ -91,10 +99,13 @@ export default function DetalhesPage() {
             <FiUser className="h-9 w-9" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-violet-950">Currículo não encontrado</h1>
-            <p className="mt-2 text-sm text-violet-600">O registro solicitado não está disponível.</p>
+            <h1 className="text-2xl font-bold text-violet-950">Curriculo nao encontrado</h1>
+            <p className="mt-2 text-sm text-violet-600">O registro solicitado nao esta disponivel.</p>
           </div>
-          <Button onClick={voltar} className="bg-violet-600 text-white hover:bg-violet-700">
+          <Button
+            onClick={() => router.push("/curriculos/visualizar")}
+            className="bg-violet-600 text-white hover:bg-violet-700"
+          >
             <FiArrowLeft />
             Voltar
           </Button>
@@ -108,20 +119,67 @@ export default function DetalhesPage() {
       ? curriculo.foto
       : getPhotoPreview(curriculo.foto);
 
+  const dataCriacao = formatCreatedAt(curriculo.createdAt);
+
   return (
     <div className="min-h-screen bg-violet-50 py-8">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4">
+
+        {/* ── Ações ───────────────────────────────────────────────────────── */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <Button variant="outline" onClick={voltar} className="w-fit border-violet-200 bg-white">
+          <Button
+            variant="outline"
+            onClick={() => router.push("/curriculos/visualizar")}
+            className="w-fit border-violet-200 bg-white"
+          >
             <FiArrowLeft />
             Voltar
           </Button>
-          <Button onClick={excluir} className="w-fit bg-red-600 text-white hover:bg-red-700">
-            <FiTrash2 />
-            Excluir
-          </Button>
+
+          <div className="flex gap-2">
+            <Button
+              onClick={() => router.push(`/curriculos/visualizar/${id}/editar`)}
+              className="bg-violet-600 text-white hover:bg-violet-700"
+            >
+              <FiEdit2 />
+              Editar
+            </Button>
+
+            {confirmarExclusao ? (
+              <div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-1.5">
+                <span className="text-sm font-medium text-red-700">Confirmar exclusao?</span>
+                <Button
+                  size="sm"
+                  onClick={excluir}
+                  disabled={excluindo}
+                  className="bg-red-600 text-white hover:bg-red-700"
+                >
+                  {excluindo ? "Excluindo..." : "Sim, excluir"}
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setConfirmarExclusao(false)}
+                  disabled={excluindo}
+                  className="border-red-200 text-red-700"
+                >
+                  Cancelar
+                </Button>
+              </div>
+            ) : (
+              <Button
+                variant="outline"
+                onClick={() => setConfirmarExclusao(true)}
+                className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+              >
+                <FiTrash2 />
+                Excluir
+              </Button>
+            )}
+          </div>
         </div>
 
+        {/* ── Dados pessoais ──────────────────────────────────────────────── */}
         <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardContent className="grid gap-6 p-6 md:grid-cols-[180px_1fr]">
             <div className="flex flex-col items-center gap-3 text-center">
@@ -153,11 +211,13 @@ export default function DetalhesPage() {
                 <Info icon={<FiCalendar />} label="Data de nascimento" value={curriculo.dataNascimento} />
                 {curriculo.linkedin && <Info icon={<FiLinkedin />} label="LinkedIn" value={curriculo.linkedin} />}
                 {curriculo.github && <Info icon={<FiGithub />} label="GitHub" value={curriculo.github} />}
+                {dataCriacao && <Info icon={<FiClock />} label="Cadastrado em" value={dataCriacao} />}
               </div>
             </div>
           </CardContent>
         </Card>
 
+        {/* ── Resumo profissional ─────────────────────────────────────────── */}
         <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardHeader>
             <CardTitle className="text-violet-950">Resumo profissional</CardTitle>
@@ -167,6 +227,7 @@ export default function DetalhesPage() {
           </CardContent>
         </Card>
 
+        {/* ── Experiências ────────────────────────────────────────────────── */}
         <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardHeader>
             <CardTitle className="text-violet-950">Experiencias profissionais</CardTitle>
@@ -190,6 +251,7 @@ export default function DetalhesPage() {
           </CardContent>
         </Card>
 
+        {/* ── Formação acadêmica ──────────────────────────────────────────── */}
         <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardHeader>
             <CardTitle className="text-violet-950">Formacao academica</CardTitle>
@@ -212,6 +274,7 @@ export default function DetalhesPage() {
           </CardContent>
         </Card>
 
+        {/* ── Habilidades ─────────────────────────────────────────────────── */}
         <Card className="rounded-lg border-violet-100 bg-white shadow-sm">
           <CardHeader>
             <CardTitle className="text-violet-950">Habilidades</CardTitle>
@@ -230,6 +293,9 @@ export default function DetalhesPage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* ── Diagnóstico ─────────────────────────────────────────────────── */}
+        <SugestoesCurriculo curriculo={curriculo} />
       </div>
     </div>
   );
@@ -266,7 +332,6 @@ function DetalhesSkeleton() {
             <CardContent className="space-y-3">
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-5/6" />
-              <Skeleton className="h-4 w-2/3" />
             </CardContent>
           </Card>
         ))}

@@ -29,4 +29,5 @@ export interface Curriculo {
   experiencias: ExperienciaProfissional[];
   formacoes: FormacaoAcademica[];
   habilidades: string[];
+  createdAt?: { seconds: number; nanoseconds: number } | null;
 }
